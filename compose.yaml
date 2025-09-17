@@ -1,0 +1,17 @@
+name: P1-GestorDeTareasAvanzado
+services:
+  frontend:
+    container_name: P1-GestorDeTareasAvanzado-Frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes: 
+      - ./:/var/www/html/
+
+  database:
+    container_name: P1-GestorDeTareasAvanzado-Database
+    image: mysql
+
+  web-server:
+    container_name: P1-GestorDeTareasAvanzado-WebServer
+    image: nginx
