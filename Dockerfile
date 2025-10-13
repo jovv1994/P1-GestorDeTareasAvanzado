@@ -1,4 +1,6 @@
-FROM php:8.2-cli
+FROM php:8.2-fpm
+
+RUN useradd -u 1000 -ms /bin/bash app
 
 RUN apt-get update && apt-get install -y \
     git \
@@ -10,5 +12,11 @@ RUN apt-get update && apt-get install -y \
 
 COPY --from=composer/composer:latest-bin /composer /usr/bin/composer
 
+WORKDIR /var/www/html
+
+RUN chown -R app:app /var/www/html
+
+USER app
+
 RUN composer global require laravel/installer
-ENV PATH="$PATH:/root/.composer/vendor/bin"
+ENV PATH="$PATH:/home/app/.composer/vendor/bin"

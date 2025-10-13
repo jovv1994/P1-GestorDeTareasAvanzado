@@ -6,12 +6,21 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes: 
-      - ./:/var/www/html/
+      - ./app:/var/www/html/
 
   database:
     container_name: P1-GestorDeTareasAvanzado-Database
     image: mysql
+    env_file:
+      - .env
+    ports:
+      - "3307:3306"
 
   web-server:
     container_name: P1-GestorDeTareasAvanzado-WebServer
-    image: nginx
+    image: nginx:latest
+    volumes:
+      - ./app:/var/www/html/
+      - ./nginx:/etc/nginx/conf.d/
+    ports:
+      - "81:80"
